@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <COMReference Include="SDKCONTPAQNGLib.dll">
+      <Guid>4a6a81f3-b2b3-448c-a557-a005091be801</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Manager\" />
+    <Folder Include="Schema\" />
+    <Folder Include="Service\Providers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AccountingClient.Schema\AccountingClient.Schema.csproj" />
+  </ItemGroup>
+
+</Project>
