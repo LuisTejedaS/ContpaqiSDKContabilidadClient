@@ -10,5 +10,9 @@ Cliente de los servicios del SDK de Contpaqi Contabilidad en C#
 Este proyecto fue hecho en VS 2017 se puede inicializar abriendo el archivo de solucion.
 
  ## Notas
- 
- Debes tener instalado el SDK de Contpaqi Contabilidad 
+
+ Debes tener instalado el SDK de Contpaqi Contabilidad
+
+Debes agregar la referencia al SDK
+
+![Alt text](AddReference.PNG?raw=true "Title")
