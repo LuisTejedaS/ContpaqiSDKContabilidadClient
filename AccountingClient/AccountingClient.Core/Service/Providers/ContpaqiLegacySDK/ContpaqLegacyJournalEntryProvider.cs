@@ -430,22 +430,24 @@ namespace AccountingClient.Core
             tSdkPoliza.Ajuste = je.Adjust ? 1 : 0;
             tSdkPoliza.Concepto = je.Concept;
             tSdkPoliza.Guid = je.Guid.ToString();
-
-            je.JournalEntryMovement.ForEach(movement =>
+            if (je.JournalEntryMovement != null)
             {
-                tSdkMovPoliza.iniciarInfo();
-                ETIPOIMPORTEMOVPOLIZA movType = GetJournalEntryMovementType(movement);
-                tSdkMovPoliza.NumMovto = movement.Number;
-                tSdkMovPoliza.CodigoCuenta = movement.Account;
-                tSdkMovPoliza.TipoMovto = movType;
-                tSdkMovPoliza.Importe = movement.Amount;
-                tSdkMovPoliza.ImporteME = movement.AmountFC;
-                tSdkMovPoliza.Diario = movement.JournalEntryMovementDaily;
-                tSdkMovPoliza.SegmentoNegocio = "0";
-                tSdkMovPoliza.Concepto = movement.Concept;
-                tSdkMovPoliza.Guid = movement.Guid.ToString();
-                tSdkPoliza.agregaMovimiento(tSdkMovPoliza);
-            });
+                je.JournalEntryMovement.ForEach(movement =>
+                {
+                    tSdkMovPoliza.iniciarInfo();
+                    ETIPOIMPORTEMOVPOLIZA movType = GetJournalEntryMovementType(movement);
+                    tSdkMovPoliza.NumMovto = movement.Number;
+                    tSdkMovPoliza.CodigoCuenta = movement.Account;
+                    tSdkMovPoliza.TipoMovto = movType;
+                    tSdkMovPoliza.Importe = movement.Amount;
+                    tSdkMovPoliza.ImporteME = movement.AmountFC;
+                    tSdkMovPoliza.Diario = movement.JournalEntryMovementDaily;
+                    tSdkMovPoliza.SegmentoNegocio = "0";
+                    tSdkMovPoliza.Concepto = movement.Concept;
+                    tSdkMovPoliza.Guid = movement.Guid.ToString();
+                    tSdkPoliza.agregaMovimiento(tSdkMovPoliza);
+                });
+            }
         }
 
         /// <summary>

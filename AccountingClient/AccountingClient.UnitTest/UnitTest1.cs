@@ -182,6 +182,48 @@ namespace AccountingClient.UnitTest
 
 
             }
+
+            [Fact]
+            public void ShouldCreateNoMovements()
+            {
+                var username = "SUPERVISOR";
+                var password = "";
+
+                ILoginService loginService = new LoginService(new ContpaqLegacySessionProvider());
+                ICompanyService companyService = new CompanyService(new ContpaqLegacyCompanyProvider());
+                IJournalEntryTypeService journalEntryTypeService = new JournalEntryTypeService(new ContpaqLegacyJournalEntryTypeProvider());
+                IJournalEntryService journalEntryService = new JournalEntryService(new ContpaqLegacyJournalEntryProvider());
+                AccountingManager accountingManager = new AccountingManager(loginService, companyService,
+                    journalEntryTypeService, journalEntryService);
+
+                var session = accountingManager.DoLogin(username, password);
+                Assert.True(session.IsValid);
+
+                var companies = accountingManager.GetCompanies();
+                Assert.NotEmpty(companies);
+
+                accountingManager.OpenCompany(session, companies.FirstOrDefault().DBName);
+
+                List<JournalEntryMovement> journalEntryMovements = new List<JournalEntryMovement>();
+                var journalEntry = new JournalEntry()
+                {
+                    Type = "6",
+                    Date = DateTime.Now,
+                    Adjust = false,
+                    Affect = true,
+                    Daily = 0,
+                    Guid = Guid.NewGuid(),
+                    Printed = false,
+                    SourceSystem = "11",
+                    Concept = Guid.NewGuid().ToString() + " desde UT",
+                    //Number = 2,
+                };
+                journalEntry.JournalEntryMovement = journalEntryMovements;
+
+                accountingManager.CreateJournalEntry(session, new List<JournalEntry>() { journalEntry });
+
+
+            }
         }
     }
 }
