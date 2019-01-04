@@ -122,7 +122,7 @@ namespace AccountingClient.Core
         //    tSdkPolizaDetail.setSesion(sdkSession);
         //    tSdkMovimientoPoliza.setSesion(sdkSession);
         //    tSdkMovimientoPoliza.setSdkCuenta(new TSdkCuenta());
-       
+
 
         //    List<JournalEntry> journalEntries = new List<JournalEntry>();
         //    List<JournalEntryMovement> movs = new List<JournalEntryMovement>();
@@ -288,20 +288,21 @@ namespace AccountingClient.Core
         /// </summary>
         /// <param name="session">The session.</param>
         /// <param name="journalEntries">The journal entries.</param>
-        public void CreateJournalEntry(Session session,  List<JournalEntry> journalEntries)
+        public void CreateJournalEntry(Session session, List<JournalEntry> journalEntries)
         {
             TSdkSesion sdkSession = session.LegacySession;
-            ITSdkPoliza tSdkPoliza = new TSdkPoliza();
             TSdkMovimientoPoliza tSdkMovimientoPoliza = new TSdkMovimientoPoliza();
 
-            tSdkPoliza.setSesion(sdkSession);
             tSdkMovimientoPoliza.setSesion(sdkSession);
             tSdkMovimientoPoliza.setSdkCuenta(new TSdkCuenta());
 
             journalEntries.ForEach(journalEntry =>
             {
+                ITSdkPoliza tSdkPoliza = new TSdkPoliza();
+                tSdkPoliza.setSesion(sdkSession);
                 GetTsdkPolFromJournalEntry(tSdkPoliza, tSdkMovimientoPoliza, journalEntry);
                 tSdkPoliza.crea();
+
             });
 
         }
@@ -448,6 +449,7 @@ namespace AccountingClient.Core
                     tSdkPoliza.agregaMovimiento(tSdkMovPoliza);
                 });
             }
+
         }
 
         /// <summary>
